@@ -10,5 +10,8 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
+  
+  // gh pagesでは、 https://アカウント名.github.io/repo名/になるので、baseにrepo名を設定する
+  base: 'syukatsu-sintyoku-app'
 })
