@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { useCompanyProgressStore } from "@/stores/project";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import TextInput from "../components/TextInput.vue";
+import type { ProgressStep } from "@/types/types";
 
 const companyName = ref("");
 const selectedTemplate = ref("0");
@@ -21,8 +23,28 @@ const dummyTemplates = [
   },
 ];
 
+function createInitialProgressSteps(progressNames: string[]) {
+  const progressSteps = progressNames.map(
+    (name): ProgressStep => ({
+      name,
+      status: "waiting",
+    })
+  );
+  return progressSteps;
+}
+
 const router = useRouter();
+const companyProgressStore = useCompanyProgressStore();
 const onSubmit = () => {
+  const selectedTemplateIndex = parseInt(selectedTemplate.value);
+  const progressStepNames = dummyTemplates[selectedTemplateIndex].progress;
+  const progressSteps = createInitialProgressSteps(progressStepNames);
+
+  companyProgressStore.progressList.push({
+    companyName: companyName.value,
+    progressSteps,
+  });
+
   router.push("/");
 };
 </script>
