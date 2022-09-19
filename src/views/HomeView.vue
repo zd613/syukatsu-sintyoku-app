@@ -24,8 +24,8 @@ function getCurrentStepIndex(progressSteps: ProgressStep[]) {
 </script>
 
 <template>
-  <div>
-    <main>
+  <div class="w-full h-full absolute">
+    <main v-if="companyProgressStore.progressList.length > 0">
       <div
         v-for="(progress, i) in companyProgressStore.progressList"
         :key="i"
@@ -50,6 +50,12 @@ function getCurrentStepIndex(progressSteps: ProgressStep[]) {
           </span>
           <span class="text-gray-100/50">内定</span>
         </div>
+      </div>
+    </main>
+    <main v-else class="w-full h-full flex items-center justify-center">
+      <div class="w-full h-full flex justify-center items-center">
+        まだ追加された選考がありません。<br />
+        右下のボタンから追加してください。
       </div>
     </main>
 
