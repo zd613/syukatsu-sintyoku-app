@@ -69,7 +69,11 @@ const onSubmit = () => {
           <fieldset class="mt-8">
             <label class="block">選考方法を選択してください。</label>
 
-            <div v-for="(template, i) in dummyTemplates" :key="template.name">
+            <div
+              v-for="(template, i) in dummyTemplates"
+              :key="template.name"
+              class="mb-4"
+            >
               <input
                 type="radio"
                 :value="i"
@@ -78,6 +82,11 @@ const onSubmit = () => {
                 v-model="selectedTemplate"
               />
               <label :for="'template' + i">{{ template.name }}</label>
+              <div class="pt-1">
+                <span v-for="(progressNams, j) in template.progress" :key="j"
+                  >{{ progressNams }} >
+                </span>
+              </div>
             </div>
           </fieldset>
 
