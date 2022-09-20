@@ -3,7 +3,7 @@ import RounedButton from "../components/RounedButton.vue";
 import IconPlus from "../components/icons/IconPlus.vue";
 import { useRouter } from "vue-router";
 import { useCompanyProgressStore } from "@/stores/project";
-import type { ProgressStep } from "@/types/types";
+import ProgressStepList from "../components/ProgressStepList.vue";
 
 const companyProgressStore = useCompanyProgressStore();
 
@@ -11,16 +11,6 @@ const router = useRouter();
 const onAddNewCompanyButtonClick = () => {
   router.push("/add-new-company");
 };
-
-// 現在のstepのindexを取得
-function getCurrentStepIndex(progressSteps: ProgressStep[]) {
-  for (let i = 0; i < progressSteps.length; i++) {
-    if (progressSteps[i].status === "waiting") {
-      return i;
-    }
-  }
-  return progressSteps.length;
-}
 </script>
 
 <template>
@@ -41,15 +31,15 @@ function getCurrentStepIndex(progressSteps: ProgressStep[]) {
             v-for="(step, j) in progress.progressSteps"
             :key="j"
             :class="
-              j === getCurrentStepIndex(progress.progressSteps)
-                ? 'text-gray-50'
-                : 'text-gray-100/50'
+              step.status === 'planned' ? 'text-gray-100/50' : 'text-gray-50'
             "
           >
             {{ step.name }} >
           </span>
           <span class="text-gray-100/50">内定</span>
         </div>
+
+        <ProgressStepList :progress-steps="progress.progressSteps" />
       </div>
     </main>
     <main v-else class="w-full h-full flex items-center justify-center">

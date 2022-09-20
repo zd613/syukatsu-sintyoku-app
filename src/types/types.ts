@@ -1,4 +1,12 @@
-export type ProgressStepStatus = "waiting" | "ok" | "ng";
+/**
+ * 進み具合
+ */
+export type ProgressStepStatus =
+  | "waiting"
+  | "planned"
+  | "passed"
+  | "failed"
+  | "canceled";
 
 // 1つのステップ
 export type ProgressStep = {

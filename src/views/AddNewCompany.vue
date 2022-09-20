@@ -25,9 +25,9 @@ const dummyTemplates = [
 
 function createInitialProgressSteps(progressNames: string[]) {
   const progressSteps = progressNames.map(
-    (name): ProgressStep => ({
+    (name, index): ProgressStep => ({
       name,
-      status: "waiting",
+      status: index === 0 ? "waiting" : "planned",
     })
   );
   return progressSteps;
