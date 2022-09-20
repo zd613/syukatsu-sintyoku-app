@@ -4,8 +4,17 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import TextInput from "../components/TextInput.vue";
 import type { ProgressStep } from "@/types/types";
+import { useForm } from "vee-validate";
+// TODO: tree shaking
+import * as yup from "yup";
 
-const companyName = ref("");
+const formSchema = {
+  companyName: yup.string().required("会社名の入力は必須です。"),
+};
+const { errors: formErrors, handleSubmit } = useForm({
+  validationSchema: formSchema,
+});
+
 const selectedTemplate = ref("0");
 
 const dummyTemplates = [
@@ -35,18 +44,26 @@ function createInitialProgressSteps(progressNames: string[]) {
 
 const router = useRouter();
 const companyProgressStore = useCompanyProgressStore();
-const onSubmit = () => {
+const onSubmit = handleSubmit((values) => {
+  // エラー処理
+  const hasError = Object.keys(formErrors.value).length > 0;
+  if (hasError) {
+    alert("エラーがあります。修正してください。");
+    return;
+  }
+
+  // 新規データを追加
   const selectedTemplateIndex = parseInt(selectedTemplate.value);
   const progressStepNames = dummyTemplates[selectedTemplateIndex].progress;
   const progressSteps = createInitialProgressSteps(progressStepNames);
-
   companyProgressStore.progressList.push({
-    companyName: companyName.value,
+    companyName: values.companyName,
     progressSteps,
   });
 
+  // ホームへ戻る
   router.push("/");
-};
+});
 </script>
 
 <template>
@@ -58,12 +75,7 @@ const onSubmit = () => {
             <label for="companyName" class="block"
               >会社名を入力してください。</label
             >
-
-            <TextInput
-              v-model="companyName"
-              placeholder="会社名"
-              class="mt-2"
-            />
+            <TextInput placeholder="会社名" class="mt-2" name="companyName" />
           </fieldset>
 
           <fieldset class="mt-8">

@@ -1,41 +1,35 @@
 <script lang="ts" setup>
-import { computed } from "vue";
+import { toRef } from "vue";
+import { useField } from "vee-validate";
 
 const props = withDefaults(
   defineProps<{
-    modelValue: string;
-    name?: string;
+    name: string;
     id?: string;
     placeholder?: string;
   }>(),
   {
     placeholder: "",
-    name: undefined,
     id: undefined,
   }
 );
 
-const emits = defineEmits<{
-  (e: "update:modelValue", newValue: string): void;
-}>();
-
-const internalValue = computed({
-  get: () => {
-    return props.modelValue;
-  },
-  set: (value) => {
-    emits("update:modelValue", value);
-  },
-});
+const { value, errorMessage, errors } = useField(toRef(props, "name"));
 </script>
 
 <template>
-  <input
-    type="text"
-    :name="name"
-    :id="id"
-    :placeholder="placeholder"
-    v-model="internalValue"
-    class="border border-gray-200 bg-gray-800 p-2 rounded-xl text-gray-200"
-  />
+  <div>
+    <input
+      type="text"
+      :name="name"
+      :id="id"
+      :placeholder="placeholder"
+      v-model="value"
+      class="border border-gray-200 bg-gray-800 p-2 rounded-xl text-gray-200"
+      :class="errors.length > 0 ? 'border-red-400' : ''"
+    />
+    <template v-if="errors.length > 0">
+      <span class="block text-sm mt-2 text-red-400">{{ errorMessage }}</span>
+    </template>
+  </div>
 </template>
