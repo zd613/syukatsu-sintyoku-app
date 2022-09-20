@@ -2,6 +2,8 @@
 
 URL: https://zd613.github.io/syukatsu-sintyoku-app/
 
+ターゲット: スマホ
+
 ## 目的
 
 就活選考状況の可視化
