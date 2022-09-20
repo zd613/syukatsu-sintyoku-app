@@ -26,18 +26,6 @@ const onAddNewCompanyButtonClick = () => {
             progress.companyName
           }}</span>
         </div>
-        <div>
-          <span
-            v-for="(step, j) in progress.progressSteps"
-            :key="j"
-            :class="
-              step.status === 'planned' ? 'text-gray-100/50' : 'text-gray-50'
-            "
-          >
-            {{ step.name }} >
-          </span>
-          <span class="text-gray-100/50">内定</span>
-        </div>
 
         <ProgressStepList :progress-steps="progress.progressSteps" />
       </div>
