@@ -9,4 +9,10 @@ export const useCompanyProgressStore = defineStore("company-progress-store", {
       progressList,
     };
   },
+
+  actions: {
+    deleteProgress(index: number) {
+      this.progressList.splice(index, 1);
+    },
+  },
 });

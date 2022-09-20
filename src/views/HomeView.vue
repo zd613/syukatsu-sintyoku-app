@@ -4,12 +4,23 @@ import IconPlus from "../components/icons/IconPlus.vue";
 import { useRouter } from "vue-router";
 import { useCompanyProgressStore } from "@/stores/project";
 import ProgressStepList from "../components/ProgressStepList.vue";
+import IconTrash from "../components/icons/IconTrash.vue";
 
 const companyProgressStore = useCompanyProgressStore();
 
 const router = useRouter();
 const onAddNewCompanyButtonClick = () => {
   router.push("/add-new-company");
+};
+
+const onDeleteButtonClick = (index: number) => {
+  const ok = confirm("削除してもよろしいですか？");
+  if (!ok) {
+    return;
+  }
+
+  companyProgressStore.deleteProgress(index);
+  alert("削除しました。");
 };
 </script>
 
@@ -21,10 +32,16 @@ const onAddNewCompanyButtonClick = () => {
         :key="i"
         class="p-2"
       >
-        <div class="">
+        <div class="flex items-center justify-between">
           <span class="border-b-2 text-lg font-bold">{{
             progress.companyName
           }}</span>
+
+          <div>
+            <button type="button" @click="onDeleteButtonClick(i)">
+              <IconTrash />
+            </button>
+          </div>
         </div>
 
         <ProgressStepList
