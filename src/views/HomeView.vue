@@ -27,7 +27,10 @@ const onAddNewCompanyButtonClick = () => {
           }}</span>
         </div>
 
-        <ProgressStepList :progress-steps="progress.progressSteps" />
+        <ProgressStepList
+          :progress-steps="progress.progressSteps"
+          class="border-b pb-4 pt-2"
+        />
       </div>
     </main>
     <main v-else class="w-full h-full flex items-center justify-center">
