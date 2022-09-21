@@ -1,3 +1,12 @@
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const goBack = () => {
+  router.go(-1);
+};
+</script>
+
 <template>
   <main>
     <h1>使い方</h1>
@@ -8,5 +17,7 @@
         <li>{作成中}</li>
       </ol>
     </div>
+
+    <button @click="goBack" class="border p-1 rounded-xl">戻る</button>
   </main>
 </template>
