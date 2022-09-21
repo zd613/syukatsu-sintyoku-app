@@ -20,6 +20,7 @@ export type ProgressStep = {
 //選考
 // TODO: 名前考える
 export type Progress = {
+  id: string;
   companyName: string;
   progressSteps: ProgressStep[];
 };
