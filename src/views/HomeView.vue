@@ -5,6 +5,8 @@ import { useRouter } from "vue-router";
 import { useCompanyProgressStore } from "@/stores/project";
 import ProgressStepList from "../components/ProgressStepList.vue";
 import IconTrash from "../components/icons/IconTrash.vue";
+import ModalPassFail from "../components/ModalPassFail.vue";
+import { ref } from "vue";
 
 const companyProgressStore = useCompanyProgressStore();
 
@@ -22,6 +24,14 @@ const onDeleteButtonClick = (id: string) => {
   companyProgressStore.deleteProgress(id);
   alert("削除しました。");
 };
+
+// モーダルのcomponentの参照
+const modalPassFail = ref<null | InstanceType<typeof ModalPassFail>>(null);
+const onWaitingStepClick = async () => {
+  const passOrFail = await modalPassFail.value?.open();
+
+  alert(passOrFail);
+};
 </script>
 
 <template>
@@ -36,9 +46,9 @@ const onDeleteButtonClick = (id: string) => {
         class="p-2"
       >
         <div class="flex items-center justify-between">
-          <span class="border-b-2 text-lg font-bold">{{
-            progress.companyName
-          }}</span>
+          <div class="border-b-2 text-lg font-bold">
+            {{ progress.companyName }}
+          </div>
 
           <div>
             <button type="button" @click="onDeleteButtonClick(progress.id)">
@@ -50,6 +60,7 @@ const onDeleteButtonClick = (id: string) => {
         <ProgressStepList
           :progress-steps="progress.progressSteps"
           class="border-b pb-4 pt-2"
+          @click:waiting="onWaitingStepClick"
         />
       </div>
     </main>
@@ -68,6 +79,9 @@ const onDeleteButtonClick = (id: string) => {
         <IconPlus />
       </RounedButton>
     </div>
+    <Teleport to="#modal">
+      <ModalPassFail ref="modalPassFail" />
+    </Teleport>
   </div>
 </template>
 

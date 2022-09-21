@@ -5,6 +5,11 @@ defineProps<{
   progressSteps: ProgressStep[];
 }>();
 
+const emits = defineEmits<{
+  /* eslint no-unused-vars: off */
+  (e: "click:waiting", stepIndex: number): void;
+}>();
+
 function getClassName(status: ProgressStepStatus) {
   switch (status) {
     case "waiting":
@@ -21,14 +26,21 @@ function getClassName(status: ProgressStepStatus) {
       throw new Error("not implemented");
   }
 }
+
+const onWaitingStepClick = (stepIndex: number) => {
+  emits("click:waiting", stepIndex);
+};
 </script>
 
 <template>
   <div>
     <div v-for="(step, j) in progressSteps" :key="j" class="inline">
-      <span :class="getClassName(step.status)">
-        {{ step.name }}
-      </span>
+      <div :class="getClassName(step.status)" class="inline">
+        <a v-if="step.status === 'waiting'" @click="onWaitingStepClick(j)">{{
+          step.name
+        }}</a>
+        <span v-else>{{ step.name }}</span>
+      </div>
       <span class="px-2">></span>
     </div>
 
