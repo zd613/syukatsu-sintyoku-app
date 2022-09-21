@@ -81,9 +81,9 @@ const onWaitingStepClick = async (id: string, stepIndex: number) => {
       </div>
     </main>
 
-    <div class="fixed w-400 bottom-0 right-0 mr-4 mb-4">
+    <div class="fixed bottom-4 right-4">
       <RounedButton
-        class="rounded-button w-12 h-12 shadow-lg"
+        class="rounded-button w-14 h-14 shadow-lg"
         @click="onAddNewCompanyButtonClick"
       >
         <IconPlus />
