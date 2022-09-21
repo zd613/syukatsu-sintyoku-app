@@ -27,10 +27,20 @@ const onDeleteButtonClick = (id: string) => {
 
 // モーダルのcomponentの参照
 const modalPassFail = ref<null | InstanceType<typeof ModalPassFail>>(null);
-const onWaitingStepClick = async () => {
+const onWaitingStepClick = async (id: string, stepIndex: number) => {
+  console.log(id);
+  console.log(stepIndex);
   const passOrFail = await modalPassFail.value?.open();
 
-  alert(passOrFail);
+  if (!passOrFail) {
+    // TODO: エラー処理
+    throw new Error("pass of fail is undefined");
+  }
+
+  companyProgressStore.updateProgressStepStatus(id, {
+    stepIndex,
+    status: passOrFail,
+  });
 };
 </script>
 
@@ -60,7 +70,7 @@ const onWaitingStepClick = async () => {
         <ProgressStepList
           :progress-steps="progress.progressSteps"
           class="border-b pb-4 pt-2"
-          @click:waiting="onWaitingStepClick"
+          @click:waiting="onWaitingStepClick(progress.id, $event)"
         />
       </div>
     </main>
