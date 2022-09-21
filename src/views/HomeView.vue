@@ -26,7 +26,10 @@ const onDeleteButtonClick = (id: string) => {
 
 <template>
   <div class="w-full h-full absolute">
-    <main v-if="companyProgressStore.progressList.length > 0">
+    <main
+      v-if="companyProgressStore.progressList.length > 0"
+      class="w-full h-full"
+    >
       <div
         v-for="progress in companyProgressStore.progressList"
         :key="progress.id"
