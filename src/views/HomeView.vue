@@ -13,13 +13,13 @@ const onAddNewCompanyButtonClick = () => {
   router.push("/add-new-company");
 };
 
-const onDeleteButtonClick = (index: number) => {
+const onDeleteButtonClick = (id: string) => {
   const ok = confirm("削除してもよろしいですか？");
   if (!ok) {
     return;
   }
 
-  companyProgressStore.deleteProgress(index);
+  companyProgressStore.deleteProgress(id);
   alert("削除しました。");
 };
 </script>
@@ -28,8 +28,8 @@ const onDeleteButtonClick = (index: number) => {
   <div class="w-full h-full absolute">
     <main v-if="companyProgressStore.progressList.length > 0">
       <div
-        v-for="(progress, i) in companyProgressStore.progressList"
-        :key="i"
+        v-for="progress in companyProgressStore.progressList"
+        :key="progress.id"
         class="p-2"
       >
         <div class="flex items-center justify-between">
@@ -38,7 +38,7 @@ const onDeleteButtonClick = (index: number) => {
           }}</span>
 
           <div>
-            <button type="button" @click="onDeleteButtonClick(i)">
+            <button type="button" @click="onDeleteButtonClick(progress.id)">
               <IconTrash />
             </button>
           </div>

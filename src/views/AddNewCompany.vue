@@ -5,6 +5,7 @@ import { useRouter } from "vue-router";
 import TextInput from "../components/TextInput.vue";
 import type { ProgressStep } from "@/types/types";
 import { useForm } from "vee-validate";
+import { nanoid } from "nanoid";
 // TODO: tree shaking
 import * as yup from "yup";
 
@@ -57,6 +58,7 @@ const onSubmit = handleSubmit((values) => {
   const progressStepNames = dummyTemplates[selectedTemplateIndex].progress;
   const progressSteps = createInitialProgressSteps(progressStepNames);
   companyProgressStore.progressList.push({
+    id: nanoid(),
     companyName: values.companyName,
     progressSteps,
   });

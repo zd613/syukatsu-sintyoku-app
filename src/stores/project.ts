@@ -15,8 +15,8 @@ export const useCompanyProgressStore = defineStore("company-progress-store", {
   },
 
   actions: {
-    deleteProgress(index: number) {
-      this.progressList.splice(index, 1);
+    deleteProgress(id: string) {
+      this.progressList = this.progressList.filter((p) => p.id !== id);
     },
   },
 });
