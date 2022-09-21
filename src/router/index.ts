@@ -15,6 +15,11 @@ const router = createRouter({
       // lazy-loaded
       component: () => import("../views/AddNewCompany.vue"),
     },
+    {
+      path: "/how-to-use",
+      name: "how-to-use",
+      component: () => import("../views/HowToUse.vue"),
+    },
   ],
 });
 
