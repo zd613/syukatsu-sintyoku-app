@@ -44,14 +44,14 @@ const onPassClick = () => {
         class="w-full h-full flex items-center justify-center border-r border-purple-400"
       >
         <a @click="onFailClick">
-          <IconXCircle class="w-36 h-36 text-red-400" />
+          <IconXCircle class="w-24 h-24 text-red-400" />
         </a>
       </div>
       <div
         class="w-full h-full flex items-center justify-center border-l border-purple-400"
       >
         <a @click="onPassClick">
-          <IconCheckCircle class="w-36 h-36 text-green-400" />
+          <IconCheckCircle class="w-24 h-24 text-green-400" />
         </a>
       </div>
     </div>
