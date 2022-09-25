@@ -48,7 +48,7 @@ const onWaitingStepClick = async (id: string, stepIndex: number) => {
   <div class="w-full h-full absolute">
     <main
       v-if="companyProgressStore.progressList.length > 0"
-      class="w-full h-full"
+      class="w-full h-full overflow-y-scroll"
     >
       <div
         v-for="progress in companyProgressStore.progressList"
