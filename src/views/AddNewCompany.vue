@@ -117,6 +117,7 @@ const isSelectedTemplate = computed(() => {
                   <span v-for="(progressNams, j) in template.progress" :key="j"
                     >{{ progressNams }} >
                   </span>
+                  <span>内定</span>
                 </div>
               </div>
             </div>
