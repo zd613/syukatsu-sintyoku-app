@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useCompanyProgressStore } from "@/stores/project";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import TextInput from "../components/TextInput.vue";
 import type { ProgressStep } from "@/types/types";
@@ -66,6 +66,13 @@ const onSubmit = handleSubmit((values) => {
   // ホームへ戻る
   router.push("/");
 });
+
+const isSelectedTemplate = computed(() => {
+  return function (selectedTemplate: string, index: number) {
+    // TODO: ===に変える
+    return selectedTemplate == index.toString();
+  };
+});
 </script>
 
 <template>
@@ -96,10 +103,18 @@ const onSubmit = handleSubmit((values) => {
                 v-model="selectedTemplate"
               />
               <label :for="'template' + i">{{ template.name }}</label>
-              <div class="pt-1">
-                <span v-for="(progressNams, j) in template.progress" :key="j"
-                  >{{ progressNams }} >
-                </span>
+              <div
+                class="p-1"
+                :class="{
+                  'selected-template': isSelectedTemplate(selectedTemplate, i),
+                  'normal-template': !isSelectedTemplate(selectedTemplate, i),
+                }"
+              >
+                <div>
+                  <span v-for="(progressNams, j) in template.progress" :key="j"
+                    >{{ progressNams }} >
+                  </span>
+                </div>
               </div>
             </div>
           </fieldset>
@@ -114,3 +129,12 @@ const onSubmit = handleSubmit((values) => {
     </div>
   </main>
 </template>
+
+<style scoped>
+.selected-template {
+  @apply border-purple-400 border-4 rounded-xl;
+}
+.normal-template {
+  @apply border-gray-400 border-4 rounded-xl;
+}
+</style>
