@@ -67,6 +67,9 @@ export const useCompanyProgressStore = defineStore("company-progress-store", {
           progress.progressSteps[i].status = "canceled";
         }
       }
+
+      const now = new Date();
+      progress.updatedAt = now;
     },
   },
 });
