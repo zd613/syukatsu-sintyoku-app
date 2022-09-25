@@ -23,4 +23,6 @@ export type Progress = {
   id: string;
   companyName: string;
   progressSteps: ProgressStep[];
+  createdAt: Date;
+  updatedAt: Date;
 };

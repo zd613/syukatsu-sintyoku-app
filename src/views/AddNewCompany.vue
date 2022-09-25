@@ -57,10 +57,13 @@ const onSubmit = handleSubmit((values) => {
   const selectedTemplateIndex = parseInt(selectedTemplate.value);
   const progressStepNames = dummyTemplates[selectedTemplateIndex].progress;
   const progressSteps = createInitialProgressSteps(progressStepNames);
+  const now = new Date();
   companyProgressStore.progressList.push({
     id: nanoid(),
     companyName: values.companyName,
     progressSteps,
+    createdAt: now,
+    updatedAt: now,
   });
 
   // ホームへ戻る
