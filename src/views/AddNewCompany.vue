@@ -16,7 +16,7 @@ const { errors: formErrors, handleSubmit } = useForm({
   validationSchema: formSchema,
 });
 
-const selectedTemplate = ref("0");
+const selectedProgress = ref("0");
 
 const dummyTemplates = [
   {
@@ -32,6 +32,11 @@ const dummyTemplates = [
     progress: ["書類選考", "面談1", "課題", "面談2"],
   },
 ];
+
+const custom = ref({
+  name: "カスタム",
+  progress: ["書類選考", "面談(最終)"],
+});
 
 function createInitialProgressSteps(progressNames: string[]) {
   const progressSteps = progressNames.map(
@@ -54,8 +59,15 @@ const onSubmit = handleSubmit((values) => {
   }
 
   // 新規データを追加
-  const selectedTemplateIndex = parseInt(selectedTemplate.value);
-  const progressStepNames = dummyTemplates[selectedTemplateIndex].progress;
+  const selectedTemplateIndex = parseInt(selectedProgress.value);
+  let progressStepNames = [];
+  // カスタムの時
+  if (selectedTemplateIndex === dummyTemplates.length) {
+    progressStepNames = custom.value.progress;
+  } else {
+    progressStepNames = dummyTemplates[selectedTemplateIndex].progress;
+  }
+
   const progressSteps = createInitialProgressSteps(progressStepNames);
   const now = new Date();
   companyProgressStore.progressList.push({
@@ -71,11 +83,15 @@ const onSubmit = handleSubmit((values) => {
 });
 
 const isSelectedTemplate = computed(() => {
-  return function (selectedTemplate: string, index: number) {
+  return function (selectedProgress: string, index: number) {
     // TODO: ===に変える
-    return selectedTemplate == index.toString();
+    return selectedProgress == index.toString();
   };
 });
+
+const onEditCustomClick = () => {
+  throw new Error("not implemented");
+};
 </script>
 
 <template>
@@ -103,18 +119,53 @@ const isSelectedTemplate = computed(() => {
                 :value="i"
                 :name="'template' + i"
                 :id="'template' + i"
-                v-model="selectedTemplate"
+                v-model="selectedProgress"
               />
               <label :for="'template' + i">{{ template.name }}</label>
               <div
                 class="p-1"
                 :class="{
-                  'selected-template': isSelectedTemplate(selectedTemplate, i),
-                  'normal-template': !isSelectedTemplate(selectedTemplate, i),
+                  'selected-template': isSelectedTemplate(selectedProgress, i),
+                  'normal-template': !isSelectedTemplate(selectedProgress, i),
                 }"
               >
                 <div>
                   <span v-for="(progressNams, j) in template.progress" :key="j"
+                    >{{ progressNams }} >
+                  </span>
+                  <span>内定</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <input
+                type="radio"
+                :value="dummyTemplates.length"
+                name="custom"
+                id="custom"
+                v-model="selectedProgress"
+              />
+              <label for="custom">{{ custom.name }}</label>
+              <button @click="onEditCustomClick" class="border p-1 rounded-xl">
+                編集
+              </button>
+              <div
+                class="p-1"
+                :class="{
+                  'selected-template': isSelectedTemplate(
+                    selectedProgress,
+                    dummyTemplates.length
+                  ),
+                  'normal-template': !isSelectedTemplate(
+                    selectedProgress,
+                    dummyTemplates.length
+                  ),
+                }"
+              >
+                <div>
+                  <span
+                    v-for="(progressNams, j) in custom.progress"
+                    :key="'custom' + j"
                     >{{ progressNams }} >
                   </span>
                   <span>内定</span>
