@@ -8,6 +8,7 @@ import { useForm } from "vee-validate";
 import { nanoid } from "nanoid";
 // TODO: tree shaking
 import * as yup from "yup";
+import ModalProgressCustom from "@/components/ModalProgressCustom.vue";
 
 const formSchema = {
   companyName: yup.string().required("会社名の入力は必須です。"),
@@ -89,8 +90,17 @@ const isSelectedTemplate = computed(() => {
   };
 });
 
-const onEditCustomClick = () => {
-  throw new Error("not implemented");
+// modalへの参照
+const refModalProgressCustom = ref<null | InstanceType<
+  typeof ModalProgressCustom
+>>(null);
+const onEditCustomClick = async () => {
+  const copy = [...custom.value.progress];
+  const newProgress = await refModalProgressCustom.value?.open(copy);
+  if (!newProgress) {
+    throw new Error("error");
+  }
+  custom.value.progress = newProgress;
 };
 </script>
 
@@ -149,6 +159,7 @@ const onEditCustomClick = () => {
               <button @click="onEditCustomClick" class="border p-1 rounded-xl">
                 編集
               </button>
+              <ModalProgressCustom ref="refModalProgressCustom" />
               <div
                 class="p-1"
                 :class="{
