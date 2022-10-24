@@ -1,6 +1,24 @@
 <script setup lang="ts">
 import { RouterView } from "vue-router";
 import TheHeader from "./components/TheHeader.vue";
+import { useHead } from "@vueuse/head";
+
+useHead({
+  title: "就活進捗アプリ",
+  meta: [
+    {
+      name: "description",
+      content: "就活の進捗を登録しておくアプリです。",
+    },
+  ],
+  link: [
+    {
+      rel: "icon",
+      type: "image/png",
+      href: "/favicon.png",
+    },
+  ],
+});
 </script>
 
 <template>
