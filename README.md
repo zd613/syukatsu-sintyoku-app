@@ -1,5 +1,8 @@
 # 就活進捗アプリ
 
+[![Deploy to gh pages](https://github.com/zd613/syukatsu-sintyoku-app/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/zd613/syukatsu-sintyoku-app/actions/workflows/deploy.yml)
+
+
 URL: https://zd613.github.io/syukatsu-sintyoku-app/
 
 ## 目的
